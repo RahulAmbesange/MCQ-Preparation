@@ -21,7 +21,7 @@ function ExamQuestions() {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/questions');
+        const response = await axios.get(`${process.env.BACKEND_BASE_URL}/questions`);
         if (response.data.success) {
           setQuestions(response.data.questions);
         } else {
