@@ -31,7 +31,7 @@ function Register() {
       console.log('Submitting values:', values);
 
       const response = await axios.post(
-        'http://localhost:8080/api/auth/register',
+        `${process.env.BACKEND_BASE_URL}auth/register`,
         values,
         {
           headers: {
