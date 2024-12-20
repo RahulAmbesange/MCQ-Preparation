@@ -31,7 +31,7 @@ function Register() {
       console.log('Submitting values:', values);
 
       const response = await axios.post(
-        `${process.env.BACKEND_BASE_URL}auth/register`,
+       ` ${process.env.REACT_APP_BACKEND_BASE_URL}/auth/register`,
         values,
         {
           headers: {
@@ -39,7 +39,6 @@ function Register() {
           },
         }
       );
-
       console.log('API Response:', response);
 
       if (response.status === 201 && response.data.success) {

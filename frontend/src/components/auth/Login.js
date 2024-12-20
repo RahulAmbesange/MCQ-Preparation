@@ -17,13 +17,17 @@ function Login() {
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    setErrorMessage('');
+    setErrorMessage(''); // Reset error message before submitting
     try {
-      const response = await axios.post(`${process.env.BACKEND_BASE_URL}/auth/login`, values);
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/login`, values);
 
       if (response.data.success) {
         localStorage.setItem('authToken', response.data.token); // Save token
-        navigate('/home', { replace: true }); // Redirect to home and replace history
+        console.log('Login successful. Token saved.');
+
+        // Debugging: Check if navigate is being called
+        console.log('Navigating to home...');
+        navigate('/home', { replace: true });
       } else {
         setErrorMessage(response.data.message || 'Login failed. Please check your credentials.');
       }
@@ -37,42 +41,42 @@ function Login() {
 
   return (
     <div>
-       <NavBar
+      <NavBar
         title="MyCareer"
         link2="/"
         linkText2="Home"
       />
-    <div className="login-container">
-      <h2>Login</h2>
-      <Formik
-        initialValues={{ email: '', password: '' }}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <div>
-              <label htmlFor="email">Email:</label>
-              <Field type="email" name="email" placeholder="Enter your email" />
-              <ErrorMessage name="email" component="div" className="error" />
-            </div>
-            <div>
-              <label htmlFor="password">Password:</label>
-              <Field type="password" name="password" placeholder="Enter your password" />
-              <ErrorMessage name="password" component="div" className="error" />
-            </div>
-            {errorMessage && <div className="error">{errorMessage}</div>}
-            <button type="submit" className='logBtn' disabled={isSubmitting}>
-              {isSubmitting ? 'Logging in...' : 'Login'}
-            </button>
-            <div className="link-container">
-              <a href="/register" className='logReg'>New User? Register</a>
-            </div>
-          </Form>
-        )}
-      </Formik>
+      <div className="login-container">
+        <h2>Login</h2>
+        <Formik
+          initialValues={{ email: '', password: '' }}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ isSubmitting }) => (
+            <Form>
+              <div>
+                <label htmlFor="email">Email:</label>
+                <Field type="email" name="email" placeholder="Enter your email" />
+                <ErrorMessage name="email" component="div" className="error" />
+              </div>
+              <div>
+                <label htmlFor="password">Password:</label>
+                <Field type="password" name="password" placeholder="Enter your password" />
+                <ErrorMessage name="password" component="div" className="error" />
+              </div>
+              {errorMessage && <div className="error">{errorMessage}</div>}
+              <button type="submit" className='logBtn' disabled={isSubmitting}>
+                {isSubmitting ? 'Logging in...' : 'Login'}
+              </button>
+              <div className="link-container">
+                <a href="/register" className='logReg'>New User? Register</a>
+              </div>
+            </Form>
+          )}
+        </Formik>
       </div>
-      </div>
+    </div>
   );
 }
 
