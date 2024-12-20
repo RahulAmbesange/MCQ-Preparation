@@ -19,7 +19,7 @@ function Login() {
   const handleSubmit = async (values, { setSubmitting }) => {
     setErrorMessage('');
     try {
-      const response = await axios.post('http://localhost:8080/api/auth/login', values);
+      const response = await axios.post(`${process.env.BACKEND_BASE_URL}/auth/login`, values);
 
       if (response.data.success) {
         localStorage.setItem('authToken', response.data.token); // Save token
